@@ -127,28 +127,31 @@ useEffect(() => {
   setUserEmail(email);
   setIsEmailLoaded(true);
 
-  fetch(`/api/dashboard/${email}`)
-    .then((res) => res.json())
-    .then((data) => {
-      // ---- other dashboard data ----
-      setHeartRateHistory(data.heartRateHistory || []);
-      setStepsHistory(data.stepsHistory || []);
-      setBpHistory(data.bpHistory || []);
-      setHealthHistory(data.healthHistory || []);
-      setWellnessTips(data.wellnessTips || []);
-
-      // ---- 🔥 REMINDER FIX (MOST IMPORTANT) ----
-      const serverReminders = data.reminders || [];
-
-      // 1️⃣ React state
-      setReminders(serverReminders);
-
-      // 2️⃣ localStorage sync (GlobalReminderListener reads this)
-      localStorage.setItem("reminders", JSON.stringify(serverReminders));
-
+ fetch(`/api/dashboard/${email}`)
+  .then((res) => {
+    if (res.status === 404) {
+      // Naya user hai, dashboard abhi tak nahi bana — ye normal hai
       setIsDataLoaded(true);
-    })
-    .catch(() => showError("Failed to load data!"));
+      return null;
+    }
+    return res.json();
+  })
+  .then((data) => {
+    if (!data) return; // naya user, kuch load nahi karna
+
+    setHeartRateHistory(data.heartRateHistory || []);
+    setStepsHistory(data.stepsHistory || []);
+    setBpHistory(data.bpHistory || []);
+    setHealthHistory(data.healthHistory || []);
+    setWellnessTips(data.wellnessTips || []);
+
+    const serverReminders = data.reminders || [];
+    setReminders(serverReminders);
+    localStorage.setItem("reminders", JSON.stringify(serverReminders));
+
+    setIsDataLoaded(true);
+  })
+  .catch(() => showError("Failed to load data!"));
 }, [location.key]);
 
 
