@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 type Role = "user" | "assistant";
 
 type Message = {
@@ -63,7 +63,7 @@ const ChatBubble: React.FC<{ message: Message; userImage?: string | null }> = ({
   <img
     src={
       userImage
-        ? `http://localhost:5000/uploads/${userImage}`
+        ? `${API}/uploads/${userImage}`
         : "/default-user.svg"
     }
     className="h-12 w-12 rounded-full object-cover border"
@@ -85,7 +85,7 @@ useEffect(() => {
     const email = localStorage.getItem("userEmail");
     if (!email) return;
 
-    fetch("http://localhost:5000/profile", {
+    fetch(`${API}/profile`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -188,7 +188,7 @@ useEffect(() => {
   // ---------- Gemini API call ----------
 // ---------- Gemini API call (via backend) ----------
 const callGemini = async (prompt: string) => {
-  const res = await fetch("http://localhost:5000/chat", {
+  const res = await fetch(`${API}/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt }),
@@ -249,7 +249,7 @@ useEffect(() => {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
-  fetch("http://localhost:5000/api/profile", {
+  fetch(`${API}/api/profile`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email }),

@@ -16,7 +16,7 @@ import GlobalReminderListener from "@/components/GlobalReminderListener";
 
 import { toast } from "sonner";
 
-const API = "http://localhost:5000";
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Navigation = () => {
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -120,12 +120,7 @@ useEffect(() => {
     setUserName(data.full_name);
     setUserEmail(data.email);
 
-    if (data.profile_image) {
-      const filename = data.profile_image.split("/uploads/")[1];
-      setUserImage(filename);
-    } else {
-      setUserImage(null);
-    }
+   setUserImage(data.profile_image || null);
 
     setForm({ full_name: data.full_name, password: "" });
   } catch (e) {
@@ -407,16 +402,12 @@ const handleLogout = () => {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-smooth"
           >
-            <img
-              src={
-                userImage
-                  ? `http://localhost:5000/uploads/${userImage}`
-                  : "/default-user.svg"
-              }
-              alt="Profile"
-              className="w-12 h-12 rounded-full border border-gray-300 object-cover"
-              onError={(e) => (e.currentTarget.src = "/default-user.svg")}
-            />
+<img
+  src={userImage || "/default-user.svg"}
+  alt="Profile"
+  className="w-12 h-12 rounded-full border border-gray-300 object-cover"
+  onError={(e) => (e.currentTarget.src = "/default-user.svg")}
+/>
             <span className="font-medium text-foreground">{userName}</span>
           </button>
 
@@ -498,16 +489,12 @@ const handleLogout = () => {
   {/* Profile Photo */}
   <div className="relative group">
 
-    <img
-      src={
-        userImage
-          ? `http://localhost:5000/uploads/${userImage}`
-          : "/default-user.svg"
-      }
-      alt="Profile"
-      className="w-24 h-24 rounded-full border border-gray-300 object-cover"
-      onError={(e) => (e.currentTarget.src = "/default-user.svg")}
-    />
+ <img
+  src={userImage || "/default-user.svg"}
+  alt="Profile"
+  className="w-24 h-24 rounded-full border border-gray-300 object-cover"
+  onError={(e) => (e.currentTarget.src = "/default-user.svg")}
+/>
 
     {userImage && userImage !== "/default-user.svg" && (
       <button

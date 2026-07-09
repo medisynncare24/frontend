@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import "@/styles/animations.css";
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -134,7 +134,7 @@ const handleSignup = async (e) => {
   setIsLoading(true);
 
   try {
-    const response = await fetch("http://localhost:5000/api/signup", {
+    const response = await fetch(`/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -187,7 +187,7 @@ const handleLogin = async (e) => {
   setIsLoading(true);
 
   try {
-    const response = await fetch("http://localhost:5000/api/login", {
+    const response = await fetch(`${API}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -250,7 +250,7 @@ const handleSendOtp = async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/send-otp",
+      `${API}/api/send-otp`,
       {
         method: "POST",
         headers: {
@@ -301,7 +301,7 @@ const handleVerifyOtp = async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/verify-otp",
+      `${API}/api/verify-otp`,
       {
         method: "POST",
         headers: {
@@ -360,7 +360,7 @@ const handleResetPassword = async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/reset-password",
+      `${API}/api/reset-password`,
       {
         method: "POST",
         headers: {
