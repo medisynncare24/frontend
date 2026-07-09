@@ -168,17 +168,18 @@ const Blog = () => {
       <Footer />
 
       {/* Modal */}
-      {isModalVisible && selectedArticle && (
-        <div
-          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
-            isAnimating ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <div
-            className={`bg-card rounded-xl shadow-xl max-w-2xl w-full p-6 transform transition-transform duration-300 ${
-              isAnimating ? "scale-100 opacity-100" : "scale-90 opacity-0"
-            }`}
-          >
+      {/* Modal */}
+{isModalVisible && selectedArticle && (
+  <div
+    className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 px-4 ${
+      isAnimating ? "opacity-100" : "opacity-0"
+    }`}
+  >
+    <div
+      className={`bg-card rounded-xl shadow-xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 transform transition-transform duration-300 ${
+        isAnimating ? "scale-100 opacity-100" : "scale-90 opacity-0"
+      }`}
+    >
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-2xl font-bold">{selectedArticle.title}</h2>
               <Button

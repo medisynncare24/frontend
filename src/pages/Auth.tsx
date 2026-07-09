@@ -134,7 +134,7 @@ const handleSignup = async (e) => {
   setIsLoading(true);
 
   try {
-    const response = await fetch(`/api/signup`, {
+    const response = await fetch(`${API}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
