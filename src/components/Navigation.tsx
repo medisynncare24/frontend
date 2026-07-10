@@ -550,7 +550,7 @@ const handleLogout = () => {
         fd.append("image", file);
         fd.append("email", userEmail);
 
-        const uploadRes = await fetch("/api/upload-profile-image", {
+        const uploadRes = await fetch(`${API}/api/upload-profile-image`, {
           method: "POST",
           body: fd,
         });
