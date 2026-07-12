@@ -256,7 +256,10 @@ const [showSmsModal, setShowSmsModal] = useState(false);
           {/* Important Notice */}
           <Card className="bg-destructive/10 border-2 border-destructive/20 animate-fade-in">
             <CardContent className="p-6 flex items-start gap-3">
-              <AlertTriangle className="w-9 h-5 text-destructive mt-1" />
+              <AlertTriangle
+  size={30}
+  className="text-destructive flex-shrink-0 -mt-1"
+/>
               <div>
                 <h3 className="font-semibold mb-2 text-destructive">Important Notice</h3>
                 <p className="text-sm text-muted-foreground">
